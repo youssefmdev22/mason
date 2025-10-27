@@ -31,3 +31,7 @@ vars:
     description: Your screen name
     default: home
     prompt: What is your screen name?
+  path:
+    type: string
+    description: Enter the path for the screen files
+    default: lib/presentation

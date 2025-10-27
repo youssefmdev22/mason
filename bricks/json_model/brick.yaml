@@ -28,10 +28,11 @@ environment:
 vars:
   model_name:
     type: string
+    default: user
     prompt: Enter model name
   model_type:
     type: enum
-    default: 1
+    default: 1. Response
     prompt: What is the model type?
     values:
       - 1. Response
@@ -40,3 +41,24 @@ vars:
     type: boolean
     default: true
     prompt: Do you want to create entity?
+  create_mapper:
+    type: enum
+    default: 1. No
+    prompt: Do you want to add mapper?
+    values:
+      - 1. No
+      - 2. Function
+      - 3. Extension
+      - 4. AutoMap
+  model_path:
+    type: string
+    description: Enter the path for model file
+    default: lib/api/models
+  entity_path:
+    type: string
+    description: Enter the path for entity file
+    default: lib/domain/entities
+  mapper_path:
+    type: string
+    description: Enter the path for entity file
+    default: lib/api/mappers
