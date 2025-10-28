@@ -39,17 +39,38 @@ class MapperGenerator {
     }
 
     // Write file
-    final filePath = _getFilePath(config);
-    final file = File(filePath);
+    String filePath = _getFilePath(config);
+    File file = File(filePath);
     file.parent.createSync(recursive: true);
 
-    if (file.existsSync()) {
+    /*if (file.existsSync()) {
       logger.warn('File already exists: $filePath');
       final response = logger.confirm('Do you want to overwrite it?');
 
       if (!response) {
         logger.info('Skipped generating mapper (file already exists).');
         return;
+      }
+    }*/
+
+    if (file.existsSync()) {
+      logger.warn('File already exists: $filePath');
+
+      final choice = logger.chooseOne(
+        'File already exists. What do you want to do?',
+        choices: ['Skip', 'Overwrite', 'Rename'],
+        defaultValue: 'Skip',
+      );
+
+      if (choice == 'Skip') {
+        logger.info('Skipped generating mapper (file already exists).');
+        return;
+      } else if (choice == 'Rename') {
+        final newName = logger.prompt('Enter a new file name (without extension):');
+        final dir = file.parent.path;
+        final ext = file.path.split('.').last;
+        filePath = '$dir/$newName.$ext';
+        file = File(filePath);
       }
     }
 
