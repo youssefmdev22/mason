@@ -1,4 +1,4 @@
-name: json_model
+name: feat_gen
 description: A new brick created with the Mason CLI.
 
 # The following defines the brick repository url.
@@ -26,39 +26,35 @@ environment:
 #  * a list of values (enums only)
 #  * an optional separator (list only)
 vars:
-  model_name:
+  feature_name:
     type: string
-    default: user
-    prompt: Enter model name
-  model_type:
-    type: enum
-    default: 1. Response
-    prompt: What is the model type?
+    default: login
+    description: Feature name (snake_case)
+    prompt: What is the feature name?
+
+  components:
+    type: array
+    description: Select components to generate
+    prompt: Select components (space-separated)
     values:
-      - 1. Response
-      - 2. Request
-  create_entity:
-    type: boolean
-    default: true
-    prompt: Do you want to create entity?
-  create_mapper:
+      - 1. Repository
+      - 2. UseCase
+      - 3. DataSource
+      - 4. RepositoryImpl
+      - 5. DataSourceImpl
+    default:
+      - 1. Repository
+      - 2. UseCase
+      - 3. DataSource
+      - 4. RepositoryImpl
+      - 5. DataSourceImpl
+
+  data_source_type:
     type: enum
-    default: 1. No
-    prompt: Do you want to add mapper?
+    description: Data source type (if DataSourceImpl selected)
+    prompt: Select data source type
     values:
-      - 1. No
-      - 2. Function
-      - 3. Extension
-      - 4. AutoMap
-  model_path:
-    type: string
-    description: Enter the path for model file
-    default: lib/api/models
-  entity_path:
-    type: string
-    description: Enter the path for entity file
-    default: lib/domain/entities
-  mapper_path:
-    type: string
-    description: Enter the path for entity file
-    default: lib/api/mappers
+      - Remote
+      - Local
+      - Custom
+    default: Remote

@@ -1,4 +1,4 @@
-name: feature
+name: model_gen
 description: A new brick created with the Mason CLI.
 
 # The following defines the brick repository url.
@@ -26,8 +26,39 @@ environment:
 #  * a list of values (enums only)
 #  * an optional separator (list only)
 vars:
-  name:
+  model_name:
     type: string
-    description: Your feature name
-    default: new_feature
-    prompt: What is your feature name?
+    default: user
+    prompt: Enter model name
+  model_type:
+    type: enum
+    default: 1. Response
+    prompt: What is the model type?
+    values:
+      - 1. Response
+      - 2. Request
+  create_entity:
+    type: boolean
+    default: true
+    prompt: Do you want to create entity?
+  create_mapper:
+    type: enum
+    default: 1. No
+    prompt: Do you want to add mapper?
+    values:
+      - 1. No
+      - 2. Function
+      - 3. Extension
+      - 4. AutoMap
+  model_path:
+    type: string
+    description: Enter the path for model file
+    default: lib/api/models
+  entity_path:
+    type: string
+    description: Enter the path for entity file
+    default: lib/domain/entities
+  mapper_path:
+    type: string
+    description: Enter the path for entity file
+    default: lib/api/mappers
