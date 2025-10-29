@@ -164,7 +164,7 @@ class ModelGenerator {
 
     // Fields
     jsonData.forEach((key, value) {
-      final fieldName = StringUtils.cleanFieldName(key);
+      final fieldName = StringUtils.toCamelCase(key);
       final fieldType = TypeResolver.resolveType(value, key, isModel: true);
       buffer.writeln("  @JsonKey(name: '$key')");
       buffer.writeln('  final $fieldType? $fieldName;');
@@ -175,7 +175,7 @@ class ModelGenerator {
     // Constructor
     buffer.writeln('  $className({');
     jsonData.keys.forEach((key) {
-      buffer.writeln('    required this.${StringUtils.cleanFieldName(key)},');
+      buffer.writeln('    required this.${StringUtils.toCamelCase(key)},');
     });
     buffer.writeln('  });');
     buffer.writeln();
@@ -194,7 +194,7 @@ class ModelGenerator {
       buffer.writeln('  $entityName toEntity() {');
       buffer.writeln('    return $entityName(');
       jsonData.forEach((key, value) {
-        final fieldName = StringUtils.cleanFieldName(key);
+        final fieldName = StringUtils.toCamelCase(key);
         final mapping = _generateFieldMapping(value, fieldName, false);
         buffer.writeln('      $fieldName: $mapping,');
       });
@@ -228,7 +228,7 @@ class ModelGenerator {
 
     // Fields
     jsonData.forEach((key, value) {
-      final fieldName = StringUtils.cleanFieldName(key);
+      final fieldName = StringUtils.toCamelCase(key);
       final fieldType = TypeResolver.resolveType(value, key, isModel: true);
       buffer.writeln("  @JsonKey(name: '$key')");
       buffer.writeln('  final $fieldType? $fieldName;');
@@ -239,7 +239,7 @@ class ModelGenerator {
     // Constructor
     buffer.writeln('  $className({');
     jsonData.keys.forEach((key) {
-      buffer.writeln('    required this.${StringUtils.cleanFieldName(key)},');
+      buffer.writeln('    required this.${StringUtils.toCamelCase(key)},');
     });
     buffer.writeln('  });');
     buffer.writeln();
@@ -258,7 +258,7 @@ class ModelGenerator {
       buffer.writeln('  $entityName toEntity() {');
       buffer.writeln('    return $entityName(');
       jsonData.forEach((key, value) {
-        final fieldName = StringUtils.cleanFieldName(key);
+        final fieldName = StringUtils.toCamelCase(key);
         final mapping = _generateFieldMapping(value, fieldName, false);
         buffer.writeln('      $fieldName: $mapping,');
       });

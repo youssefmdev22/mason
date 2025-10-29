@@ -1,6 +1,8 @@
 import 'dart:io';
 import 'package:mason/mason.dart';
 
+import '../utils/file_paths.dart';
+
 class GenerationConfig {
   final String modelName;
   final String entityName;
@@ -35,9 +37,9 @@ class GenerationConfig {
       createEntity: vars['create_entity'] as bool,
       mapperOption: _parseMapperOption(vars['create_mapper'] as String),
       isResponseType: vars['model_type'] as String == '1. Response',
-      modelPath: vars['model_path'] as String,
-      entityPath: vars['entity_path'] as String,
-      mapperPath: vars['mapper_path'] as String,
+      modelPath: FilePaths.modelPath,
+      entityPath: FilePaths.entityPath,
+      mapperPath: FilePaths.mapperPath,
       packageName: _getPackageName(context.logger),
     );
   }

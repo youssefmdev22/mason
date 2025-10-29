@@ -1,9 +1,14 @@
 class StringUtils {
-  /// Converts string to camelCase
-  /// Example: "user_name" -> "userName"
-  ///          "user name" -> "userName"
+
   static String toCamelCase(String input) {
-    input = input.trim().replaceAll(RegExp(r'^_+'), '');
+    input = input.trim().replaceAll(RegExp(r'^[_\s]+'), '');
+
+    if (!input.contains(RegExp(r'[_\s-]'))) {
+      return input.isEmpty
+          ? input
+          : input[0].toLowerCase() + input.substring(1);
+    }
+
     final parts = input.split(RegExp(r'[_\s-]+'));
 
     if (parts.isEmpty) return input;
@@ -17,43 +22,32 @@ class StringUtils {
             .join();
   }
 
-  /// Converts string to snake_case
-  /// Example: "UserName" -> "user_name"
-  ///          "user name" -> "user_name"
-  ///          "user-Name" -> "user_name"
   static String toSnakeCase(String input) {
-    return input
-        .trim()
+    input = input.trim();
+    input = input.replaceAll(RegExp(r'[\s-]+'), '_');
+    input = input.replaceAll(RegExp(r'^[_\s]+'), '');
+    final result = input
         .replaceAllMapped(
-      RegExp(r'([A-Z])'),
-          (m) => '_${m.group(0)!.toLowerCase()}',
-    )
-        .replaceAll(RegExp(r'[\s\-]+'), '_')
-        .replaceFirst(RegExp(r'^_+'), '')
+        RegExp(r'(?<=[a-z0-9])([A-Z])'), (m) => '_${m.group(1)}')
+        .replaceAllMapped(RegExp(r'([A-Z])([A-Z][a-z])'),
+            (m) => '${m.group(1)}_${m.group(2)}')
         .toLowerCase();
+    return result.replaceAll(RegExp(r'^_+|_+$'), '');
   }
 
-  /// Converts string to PascalCase
-  /// Example: "user_name" -> "UserName"
-  ///          "user name" -> "UserName"
-  ///          "user-name" -> "UserName"
   static String toPascalCase(String input) {
-    return input
-        .trim()
-        .split(RegExp(r'[_\s-]+'))
-        .map((w) => w.isEmpty
-        ? ''
-        : '${w[0].toUpperCase()}${w.substring(1).toLowerCase()}')
+    if (input.isEmpty) return input;
+    input = input.trim();
+    final isPascal = RegExp(r'^[A-Z][a-z0-9]+(?:[A-Z][a-z0-9]+)*$');
+    if (isPascal.hasMatch(input)) return input;
+    input = input
+        .replaceAll(RegExp(r'[\s-]+'), '_')
+        .replaceAll(RegExp(r'^_+|_+$'), '');
+    final parts = input.split(RegExp(r'[_]+'));
+    return parts
+        .where((p) => p.isNotEmpty)
+        .map((p) => '${p[0].toUpperCase()}${p.substring(1).toLowerCase()}')
         .join();
   }
 
-  /// Cleans field name from leading underscores
-  /// Example: "_userName" -> "userName"
-  static String cleanFieldName(String key) {
-    key = key.trim();
-    if (key.startsWith('_')) {
-      key = key.replaceFirst(RegExp(r'^_+'), '');
-    }
-    return toCamelCase(key);
-  }
 }

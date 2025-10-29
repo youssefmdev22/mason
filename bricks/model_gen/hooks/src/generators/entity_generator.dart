@@ -128,7 +128,7 @@ class EntityGenerator {
 
     // Fields
     jsonData.forEach((key, value) {
-      final fieldName = StringUtils.cleanFieldName(key);
+      final fieldName = StringUtils.toCamelCase(key);
       final fieldType = TypeResolver.resolveType(value, key, isModel: false);
       buffer.writeln('  final $fieldType? $fieldName;');
     });
@@ -138,7 +138,7 @@ class EntityGenerator {
     // Constructor
     buffer.writeln('  $className({');
     jsonData.keys.forEach((key) {
-      buffer.writeln('    required this.${StringUtils.cleanFieldName(key)},');
+      buffer.writeln('    required this.${StringUtils.toCamelCase(key)},');
     });
     buffer.writeln('  });');
 
@@ -148,7 +148,7 @@ class EntityGenerator {
       buffer.writeln('  $modelName toRequest() {');
       buffer.writeln('    return $modelName(');
       jsonData.forEach((key, value) {
-        final fieldName = StringUtils.cleanFieldName(key);
+        final fieldName = StringUtils.toCamelCase(key);
         final mapping = _generateFieldMapping(value, fieldName);
         buffer.writeln('      $fieldName: $mapping,');
       });
@@ -179,7 +179,7 @@ class EntityGenerator {
 
     // Fields
     jsonData.forEach((key, value) {
-      final fieldName = StringUtils.cleanFieldName(key);
+      final fieldName = StringUtils.toCamelCase(key);
       final fieldType = TypeResolver.resolveType(value, key, isModel: false);
       buffer.writeln('  final $fieldType? $fieldName;');
     });
@@ -189,7 +189,7 @@ class EntityGenerator {
     // Constructor
     buffer.writeln('  $className({');
     jsonData.keys.forEach((key) {
-      buffer.writeln('    required this.${StringUtils.cleanFieldName(key)},');
+      buffer.writeln('    required this.${StringUtils.toCamelCase(key)},');
     });
     buffer.writeln('  });');
 
@@ -199,7 +199,7 @@ class EntityGenerator {
       buffer.writeln('  $modelName toRequest() {');
       buffer.writeln('    return $modelName(');
       jsonData.forEach((key, value) {
-        final fieldName = StringUtils.cleanFieldName(key);
+        final fieldName = StringUtils.toCamelCase(key);
         final mapping = _generateFieldMapping(value, fieldName);
         buffer.writeln('      $fieldName: $mapping,');
       });

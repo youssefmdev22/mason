@@ -115,7 +115,7 @@ class MapperGenerator {
       buffer.writeln('    return $entityClass(');
 
       jsonData.forEach((key, value) {
-        final fieldName = StringUtils.cleanFieldName(key);
+        final fieldName = StringUtils.toCamelCase(key);
         final mapping = _generateFieldMapping(value, fieldName, false);
         buffer.writeln('      $fieldName: $mapping,');
       });
@@ -131,7 +131,7 @@ class MapperGenerator {
       buffer.writeln('    return $modelClass(');
 
       jsonData.forEach((key, value) {
-        final fieldName = StringUtils.cleanFieldName(key);
+        final fieldName = StringUtils.toCamelCase(key);
         final mapping = _generateFieldMapping(value, fieldName, true);
         buffer.writeln('      $fieldName: $mapping,');
       });
@@ -159,7 +159,7 @@ class MapperGenerator {
       buffer.writeln('    return $entityClass(');
 
       jsonData.forEach((key, value) {
-        final fieldName = StringUtils.cleanFieldName(key);
+        final fieldName = StringUtils.toCamelCase(key);
         final mapping = _generateFieldMapping(value, fieldName, false);
         buffer.writeln('      $fieldName: $mapping,');
       });
@@ -175,7 +175,7 @@ class MapperGenerator {
       buffer.writeln('    return $modelClass(');
 
       jsonData.forEach((key, value) {
-        final fieldName = StringUtils.cleanFieldName(key);
+        final fieldName = StringUtils.toCamelCase(key);
         final mapping = _generateFieldMapping(value, fieldName, true);
         buffer.writeln('      $fieldName: $mapping,');
       });
